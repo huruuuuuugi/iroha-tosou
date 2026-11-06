@@ -237,22 +237,14 @@ button:focus-visible {
   line-height: 1.4;
 }
 
-/* 電話をかける人が多い想定なので、太字にして、押せる範囲を上下に広げて44px以上にする */
+/* 架空の番号で、実在の番号と重なる可能性があるので、押しても発信しないようリンクにしていない */
 .tel__number {
   display: inline-block;
-  padding-block: 6px;
   font-family: var(--font-en);
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--color-main);
-  text-decoration: none; /* リンク全体には線を引かない。「TEL」に線が付かないようにするため */
-}
-
-/* 「押せる」ことを示す下線は、番号の部分にだけ引く */
-.tel__digits {
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }
 
 .tel__number::before {
