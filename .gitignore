@@ -1,0 +1,18 @@
+# サイトの公開に必要なファイルだけを許可する（素材や制作メモは公開しない）
+/*
+!/.gitignore
+!/README.md
+!/index.html
+!/contact.html
+!/css/
+!/js/
+!/images/
+
+# images の中も、サイトで使うものだけ
+/images/*
+!/images/logo.png
+!/images/icon/
+!/images/photo/
+/images/photo/trouble-peel.jpg
+
+.DS_Store

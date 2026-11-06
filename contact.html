@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>無料お見積り申し込みフォーム｜まちのペンキ屋 いろは塗装</title>
+  <meta name="description" content="桜ヶ丘市の外壁・屋根塗装店、いろは塗装の無料お見積り申し込みフォームです。お名前とご連絡先など、最小限の入力で申し込めます。お電話でも受け付けています。">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Noto+Sans:wght@400;700&family=Zen+Kaku+Gothic+Antique:wght@700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ヘッダー：トップページと同じ。このページ自体がフォームなので、お見積りボタンは置かない -->
+  <header class="header">
+    <a class="header__logo" href="index.html">
+      <img src="images/logo.png" alt="まちのペンキ屋 いろは塗装" width="560" height="150">
+    </a>
+    <nav class="header__nav" aria-label="メインメニュー">
+      <ul class="header__nav-list">
+        <li><a href="index.html#message">私たちについて</a></li>
+        <li><a href="index.html#works">施工事例</a></li>
+        <li><a href="index.html#price">料金・流れ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="contact">
+    <div class="container container--narrow">
+
+      <h1 class="heading contact__title">無料お見積り申し込みフォーム</h1>
+
+      <!-- 電話で問い合わせる人も多いと想定して、入力の前に番号を見せる -->
+      <div class="contact__tel">
+        <p>お電話でも受け付けています。</p>
+        <p class="tel">
+          <a class="tel__number" href="tel:0120121234"><span class="tel__digits">0120-12-1234</span></a>
+          <span class="tel__time">受付 8:00〜18:00／日曜定休</span>
+        </p>
+      </div>
+
+      <noscript>
+        <p class="form-noscript">このフォームはJavaScriptを使っています。お手数ですが、お電話でお問い合わせください。</p>
+      </noscript>
+
+      <!-- 進み具合。全部でいくつあって今どこかが分かると、入力を続けやすい。
+           状態は js/contact-form.js が付ける。フォームと同じくJSなしでは出さないので hidden にしている -->
+      <ol class="form-progress" id="form-progress" aria-label="入力の進み具合" hidden>
+        <li class="form-progress__item"><span class="form-progress__num">1</span>必須項目</li>
+        <li class="form-progress__item"><span class="form-progress__num">2</span>任意項目</li>
+        <li class="form-progress__item"><span class="form-progress__num">3</span>確認</li>
+        <li class="form-progress__item"><span class="form-progress__num">4</span>完了</li>
+      </ol>
+
+      <!-- novalidate：ブラウザ標準の吹き出しを止めて、js/contact-form.js のエラー表示に統一する -->
+      <form class="form" id="estimate-form" novalidate>
+
+        <!-- 画面1：必須項目 -->
+        <section class="form-step" data-step="1" aria-labelledby="step1-title" hidden>
+          <h2 class="visually-hidden" id="step1-title" tabindex="-1">必須項目の入力</h2>
+
+          <fieldset class="form-group" data-field="work">
+            <legend class="form-label">希望する工事内容<span class="form-required">※必須</span></legend>
+            <div class="form-choices">
+              <label class="form-choice"><input type="radio" name="work" value="外壁塗装">外壁塗装</label>
+              <label class="form-choice"><input type="radio" name="work" value="屋根塗装">屋根塗装</label>
+              <label class="form-choice"><input type="radio" name="work" value="外壁＋屋根セット">外壁＋屋根セット</label>
+              <label class="form-choice"><input type="radio" name="work" value="まだ決めていない">まだ決めていない</label>
+            </div>
+            <p class="form-error" hidden></p>
+          </fieldset>
+
+          <fieldset class="form-group form-row" data-field="name">
+            <legend class="form-label">氏名<span class="form-required">※必須</span></legend>
+            <div class="form-inputs">
+              <label class="form-input-wrap">
+                <span class="visually-hidden">姓</span>
+                <input class="form-input" type="text" name="familyName" placeholder="姓" autocomplete="family-name">
+              </label>
+              <label class="form-input-wrap">
+                <span class="visually-hidden">名</span>
+                <input class="form-input" type="text" name="givenName" placeholder="名" autocomplete="given-name">
+              </label>
+            </div>
+            <p class="form-error" hidden></p>
+          </fieldset>
+
+          <div class="form-group form-row" data-field="tel">
+            <label class="form-label" for="tel">電話番号<span class="form-required">※必須</span></label>
+            <div class="form-inputs">
+              <!-- aria-describedby：入力欄に移動したときに、下の案内も読み上げられるようにする -->
+              <input class="form-input form-input--medium" id="tel" type="tel" name="tel" placeholder="09012345678" autocomplete="tel" aria-describedby="tel-hint">
+            </div>
+            <p class="form-hint" id="tel-hint">ハイフンなしでOKです。</p>
+            <p class="form-error" hidden></p>
+          </div>
+
+          <div class="form-group form-row" data-field="city">
+            <label class="form-label" for="city">施工場所<br class="pc-only">（市区町村）<span class="form-required">※必須</span></label>
+            <div class="form-inputs">
+              <input class="form-input form-input--medium" id="city" type="text" name="city" placeholder="市区町村まで" autocomplete="address-level2">
+            </div>
+            <p class="form-error" hidden></p>
+          </div>
+
+          <div class="form-actions">
+            <a class="button button--outline" href="index.html">戻る</a>
+            <button class="button button--main button--raised" type="submit">次の項目へ</button>
+          </div>
+        </section>
+
+        <!-- 画面2：分かる範囲で（任意） -->
+        <section class="form-step" data-step="2" aria-labelledby="step2-title" hidden>
+          <div class="form-step-head">
+            <h2 class="form-step-title" id="step2-title" tabindex="-1">分かる範囲で教えてください。</h2>
+            <p class="form-step-lead">お見積りの際の参考にします。</p>
+          </div>
+
+          <div class="form-group form-row" data-field="email">
+            <label class="form-label" for="email">メールアドレス</label>
+            <div class="form-inputs">
+              <input class="form-input" id="email" type="email" name="email" placeholder="example@example.com" autocomplete="email">
+            </div>
+            <p class="form-error" hidden></p>
+          </div>
+
+          <fieldset class="form-group">
+            <legend class="form-label">連絡方法の希望</legend>
+            <div class="form-choices">
+              <label class="form-choice"><input type="radio" name="contactMethod" value="電話">電話</label>
+              <label class="form-choice"><input type="radio" name="contactMethod" value="メール">メール</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend class="form-label">連絡可能な時間帯</legend>
+            <div class="form-choices">
+              <label class="form-choice"><input type="checkbox" name="contactTime" value="午前">午前</label>
+              <label class="form-choice"><input type="checkbox" name="contactTime" value="午後">午後</label>
+              <label class="form-choice"><input type="checkbox" name="contactTime" value="夕方">夕方</label>
+              <label class="form-choice"><input type="checkbox" name="contactTime" value="いつでも">いつでも</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend class="form-label">建物の種類</legend>
+            <div class="form-choices">
+              <label class="form-choice"><input type="radio" name="building" value="戸建て">戸建て</label>
+              <label class="form-choice"><input type="radio" name="building" value="アパート・マンション">アパート・マンション</label>
+              <label class="form-choice"><input type="radio" name="building" value="店舗">店舗</label>
+              <label class="form-choice"><input type="radio" name="building" value="その他">その他</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend class="form-label">築年数</legend>
+            <div class="form-choices">
+              <label class="form-choice"><input type="radio" name="age" value="〜10年">〜10年</label>
+              <label class="form-choice"><input type="radio" name="age" value="10〜20年">10〜20年</label>
+              <label class="form-choice"><input type="radio" name="age" value="20〜30年">20〜30年</label>
+              <label class="form-choice"><input type="radio" name="age" value="30年以上">30年以上</label>
+              <label class="form-choice"><input type="radio" name="age" value="わからない">わからない</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend class="form-label">気になっている症状（複数可）</legend>
+            <div class="form-choices">
+              <label class="form-choice"><input type="checkbox" name="symptom" value="色あせ">色あせ</label>
+              <label class="form-choice"><input type="checkbox" name="symptom" value="ひび割れ">ひび割れ</label>
+              <label class="form-choice"><input type="checkbox" name="symptom" value="剥がれ">剥がれ</label>
+              <label class="form-choice"><input type="checkbox" name="symptom" value="手に白い粉がつく">手に白い粉がつく</label>
+              <label class="form-choice"><input type="checkbox" name="symptom" value="雨漏り">雨漏り</label>
+              <label class="form-choice"><input type="checkbox" name="symptom" value="その他">その他</label>
+            </div>
+            <label class="form-input-wrap form-other">
+              <span class="visually-hidden">その他の症状の内容</span>
+              <input class="form-input" type="text" name="symptomOther">
+            </label>
+          </fieldset>
+
+          <!-- 色の丸は色だけでは伝わらないので、label に名前を持たせ、選んだ色の名前も文字で出す -->
+          <fieldset class="form-group">
+            <legend class="form-label">ご希望の色</legend>
+            <div class="form-colors">
+              <label class="form-color" style="--chip-color: #F2EEE6"><input type="radio" name="color" value="ウォームホワイト"><span class="visually-hidden">ウォームホワイト</span></label>
+              <label class="form-color" style="--chip-color: #EDE3CC"><input type="radio" name="color" value="アイボリー"><span class="visually-hidden">アイボリー</span></label>
+              <label class="form-color" style="--chip-color: #D8C7A8"><input type="radio" name="color" value="ベージュ"><span class="visually-hidden">ベージュ</span></label>
+              <label class="form-color" style="--chip-color: #B7AFA3"><input type="radio" name="color" value="グレージュ"><span class="visually-hidden">グレージュ</span></label>
+              <label class="form-color" style="--chip-color: #C9CBCC"><input type="radio" name="color" value="ライトグレー"><span class="visually-hidden">ライトグレー</span></label>
+              <label class="form-color" style="--chip-color: #4A4C4E"><input type="radio" name="color" value="チャコール"><span class="visually-hidden">チャコール</span></label>
+              <label class="form-color" style="--chip-color: #2F3E55"><input type="radio" name="color" value="ネイビー"><span class="visually-hidden">ネイビー</span></label>
+              <label class="form-color" style="--chip-color: #7A8263"><input type="radio" name="color" value="モスグリーン"><span class="visually-hidden">モスグリーン</span></label>
+            </div>
+            <p class="form-color-name" id="color-name" hidden></p>
+            <div class="form-choices">
+              <label class="form-choice"><input type="radio" name="color" value="まだ決めていない">まだ決めていない</label>
+            </div>
+          </fieldset>
+
+          <div class="form-group">
+            <label class="form-label" for="message">その他のご相談</label>
+            <textarea class="form-input form-textarea" id="message" name="message" rows="3"></textarea>
+          </div>
+
+          <div class="form-group form-consent" data-field="consent">
+            <label class="form-choice"><input type="checkbox" name="consent" value="同意する">個人情報の取り扱いへの同意<span class="form-required">※必須</span></label>
+            <p class="form-error" hidden></p>
+          </div>
+
+          <div class="form-actions">
+            <button class="button button--outline" type="button" data-back>戻る</button>
+            <button class="button button--main button--raised" type="submit">確認画面へ</button>
+          </div>
+        </section>
+
+        <!-- 画面3：確認（一覧の中身は JS が入力内容から作る） -->
+        <section class="form-step" data-step="3" aria-labelledby="step3-title" hidden>
+          <div class="form-step-head">
+            <h2 class="form-step-title" id="step3-title" tabindex="-1">入力内容をご確認ください。</h2>
+            <p class="form-step-lead">修正するときは「戻る」を押してください。入力した内容はそのまま残ります。</p>
+          </div>
+          <dl class="form-summary" id="form-summary"></dl>
+          <p class="note form-demo-note">※架空の店舗のサイトです。送信しても、入力内容はどこにも送られません。</p>
+          <div class="form-actions">
+            <button class="button button--outline" type="button" data-back>戻る</button>
+            <button class="button button--accent" type="submit">この内容で送信する</button>
+          </div>
+        </section>
+
+        <!-- 画面4：完了 -->
+        <section class="form-step form-done" data-step="4" aria-labelledby="step4-title" hidden>
+          <h2 class="form-step-title" id="step4-title" tabindex="-1">お申し込み<br class="sp-only">ありがとうございました。</h2>
+          <p class="form-done__text">内容を確認のうえ、<br class="sp-only">担当の職人からご連絡します。</p>
+          <p class="note">※架空の店舗のサイトのため、<br class="sp-only">実際の送信・ご連絡はありません。</p>
+          <div class="form-actions">
+            <a class="button button--main" href="index.html">トップページへ戻る</a>
+          </div>
+        </section>
+
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <p class="footer__logo"><img src="images/logo.png" alt="まちのペンキ屋 いろは塗装" width="560" height="150" loading="lazy"></p>
+      <address class="footer__address">
+        〒000-0000 桜ヶ丘市いろは町1-6-4<br>
+        対応エリア：桜ヶ丘市・周辺地域
+      </address>
+    </div>
+    <p class="footer__note">※ポートフォリオ用に制作した架空の店舗のサイトです。店名・実績・料金・電話番号・住所はすべて架空で、写真はAI生成です。</p>
+  </footer>
+
+  <script src="js/contact-form.js"></script>
+</body>
+</html>

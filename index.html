@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>まちのペンキ屋 いろは塗装｜桜ヶ丘市の外壁・屋根塗装</title>
+  <meta name="description" content="桜ヶ丘で42年。自社職人が見積りから施工、点検まで担当する、地域密着の外壁・屋根塗装店です。見積り無料。">
+
+  <!-- Google Fonts：見出し=Zen Kaku Gothic Antique / 本文=BIZ UDPGothic / 数字・英字=Noto Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Noto+Sans:wght@400;700&family=Zen+Kaku+Gothic+Antique:wght@700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ① ヘッダー -->
+  <header class="header">
+    <a class="header__logo" href="index.html">
+      <img src="images/logo.png" alt="まちのペンキ屋 いろは塗装" width="560" height="150">
+    </a>
+    <nav class="header__nav" aria-label="メインメニュー">
+      <ul class="header__nav-list">
+        <li><a href="#message">私たちについて</a></li>
+        <li><a href="#works">施工事例</a></li>
+        <li><a href="#price">料金・流れ</a></li>
+      </ul>
+    </nav>
+    <a class="button button--accent header__button" href="contact.html">無料お見積り</a>
+  </header>
+
+  <main>
+
+    <!-- ② ヒーロー -->
+    <section class="hero">
+      <div class="hero__content">
+        <h1 class="hero__title">街の<span class="hero__title-accent">色</span>を、<br>もう一度</h1>
+        <p class="hero__lead">桜ヶ丘で42年。<br>ハケ1本で、この街の家を塗り直してきました。</p>
+        <div class="hero__actions">
+          <a class="button button--accent button--large" href="contact.html">無料お見積り</a>
+          <p class="tel">
+            <a class="tel__number" href="tel:0120121234"><span class="tel__digits">0120-12-1234</span></a>
+            <span class="tel__time">受付 8:00〜18:00／日曜定休</span>
+          </p>
+        </div>
+      </div>
+      <div class="hero__media">
+        <img src="images/photo/hero-painter.jpg" alt="藍色の作業着の職人が、ハケで外壁を丁寧に塗っている様子" width="893" height="1600">
+      </div>
+      <!-- ペンキの面。下端の波（写真の上端の波）ごと、スクロールで下へ流れる -->
+      <div class="hero__paint" aria-hidden="true">
+        <!-- 波が上下に揺れても切れないよう、描く範囲を広めに取っている。動きは js/drip.js -->
+        <svg class="hero__wave" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0 0H1440V60C1300 74 1180 48 1020 52C840 56 700 46 520 54C340 62 160 66 0 70Z"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ヒーローのあとに続く本編。ペンキで塗りつぶされたあと、ここが浮かび上がる -->
+    <div class="page-rest">
+
+      <!-- ③ 代表メッセージ -->
+      <section class="message section" id="message">
+        <div class="message__inner container">
+          <img class="message__image" src="images/photo/message-owner.jpg" alt="いろは塗装 代表 伊呂波 誠の笑顔の写真" width="1600" height="872">
+          <div class="message__text">
+            <div>
+              <p class="section-label">MESSAGE</p>
+              <h2 class="heading">「うちに頼んでよかった」と<br>言われる仕事を。</h2>
+              <div class="message__body">
+                <p>父がこの店をはじめてから、42年が経ちました。</p>
+                <p>塗装は、塗っているあいだより、塗ったあとの時間のほうがずっと長い仕事です。</p>
+                <p>10年後に「やっぱりいろはさんでよかった」と言ってもらえるように、<br class="pc-only">見えない下地の作業から、ひと塗りずつ手を抜かずに仕上げます。</p>
+              </div>
+            </div>
+            <p class="message__sign">いろは塗装 代表<span>伊呂波 誠</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ④ 実績の数字 -->
+      <section class="numbers" aria-labelledby="numbers-title">
+        <div class="container">
+          <h2 id="numbers-title" class="visually-hidden">いろは塗装の実績</h2>
+          <dl class="numbers__list">
+            <div class="numbers__item">
+              <dt>創業から</dt>
+              <dd><span class="numbers__value">42</span>年</dd>
+            </div>
+            <div class="numbers__item">
+              <dt>施工実績</dt>
+              <dd><span class="numbers__value">3,200</span>件</dd>
+            </div>
+            <div class="numbers__item">
+              <dt>ご紹介・リピート</dt>
+              <dd><span class="numbers__value">68</span>%</dd>
+            </div>
+          </dl>
+          <p class="note numbers__note">※2026年10月時点・自社集計</p>
+        </div>
+      </section>
+
+      <!-- ⑤ お悩み -->
+      <section class="trouble section">
+        <div class="container">
+          <div class="section-head">
+            <p class="section-label">TROUBLE</p>
+            <h2 class="heading">こんなお悩み、<br class="sp-only">まずはご相談ください。</h2>
+          </div>
+          <ul class="trouble__list">
+            <li class="card">
+              <img class="card__image" src="images/photo/trouble-fade.jpg" alt="日に焼けて色あせた外壁のアップ" width="1408" height="768" loading="lazy">
+              <div class="card__body">
+                <h3 class="card__title">外壁の色があせてきた</h3>
+                <p>新築のころより、なんだかくすんで見える</p>
+              </div>
+            </li>
+            <li class="card">
+              <img class="card__image" src="images/photo/trouble-crack.jpg" alt="外壁に入った細いひび割れのアップ" width="1408" height="768" loading="lazy">
+              <div class="card__body">
+                <h3 class="card__title">ひび割れ・剥がれが気になる</h3>
+                <p>小さなひびから、雨水が入ることも</p>
+              </div>
+            </li>
+            <li class="card">
+              <img class="card__image" src="images/photo/trouble-flyer.jpg" alt="塗装業者のチラシを何枚も手に取って、見比べている様子" width="1408" height="768" loading="lazy">
+              <div class="card__body">
+                <h3 class="card__title">どこに頼めばいいか分からない</h3>
+                <p>飛び込みの業者に、急かされて不安</p>
+              </div>
+            </li>
+          </ul>
+          <p class="trouble__closing">ひとつでも当てはまったら、<br>まずは<strong>無料の現地調査</strong>を。</p>
+          <!-- 「相談しよう」と思った場所ですぐ行動できるように、呼びかけの直下に置く -->
+          <div class="action-row">
+            <a class="button button--accent button--large" href="contact.html">無料お見積りはこちら</a>
+            <p class="tel">
+              <a class="tel__number" href="tel:0120121234"><span class="tel__digits">0120-12-1234</span></a>
+              <span class="tel__time">受付 8:00〜18:00／日曜定休</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ⑥ 選ばれる3つの理由 -->
+      <section class="reason section section--sub">
+        <div class="container">
+          <div class="section-head">
+            <p class="section-label">REASON</p>
+            <h2 class="heading">選ばれる3つの理由</h2>
+          </div>
+          <ol class="reason__list">
+            <li class="reason__item">
+              <img class="reason__image" src="images/photo/reason-team.jpg" alt="藍色の作業着をそろえた、いろは塗装の職人たち" width="1408" height="768" loading="lazy">
+              <div class="reason__text">
+                <p class="reason__num">01</p>
+                <div>
+                  <h3 class="reason__title">自社職人が、最後まで。</h3>
+                  <p>下請けには出しません。お見積りに伺った職人が、そのまま塗ります。</p>
+                </div>
+              </div>
+            </li>
+            <li class="reason__item">
+              <img class="reason__image" src="images/photo/reason-estimate.jpg" alt="代表がお客さまに見積書の内容を説明している様子" width="1408" height="768" loading="lazy">
+              <div class="reason__text">
+                <p class="reason__num">02</p>
+                <div>
+                  <h3 class="reason__title">見積り無料。追加料金なし。</h3>
+                  <p>何にいくらかかるのか、項目ごとにご説明します。<br class="pc-only">お見積り後の追加請求はありません。</p>
+                </div>
+              </div>
+            </li>
+            <li class="reason__item">
+              <img class="reason__image" src="images/photo/reason-inspection.jpg" alt="塗り終えた外壁を点検する職人" width="1408" height="768" loading="lazy">
+              <div class="reason__text">
+                <p class="reason__num">03</p>
+                <div>
+                  <h3 class="reason__title">塗ったあとも、ご近所づきあい。</h3>
+                  <p>1年、3年、5年の無料点検に伺います。気になることがあれば、いつでも。</p>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ⑦ 色見本（js/color-sim.js） -->
+      <section class="color section" id="color">
+        <div class="container container--narrow">
+          <div class="section-head">
+            <p class="section-label">COLOR</p>
+            <h2 class="heading">色を選んで、<br class="sp-only">わが家をイメージ</h2>
+            <p class="section-head__lead">外壁の色は、家の印象をガラリと変えます。<br>気になる色を押してみてください。</p>
+          </div>
+          <div class="color__body">
+            <div class="color__house">
+              <svg viewBox="0 0 400 320" role="img" aria-label="選んだ外壁の色で塗られた、2階建ての家のイラスト">
+                <rect x="0" y="300" width="400" height="20" fill="#CFC6B5"/>
+                <polygon id="roof" points="40,120 200,30 360,120" fill="#3D4148"/>
+                <path id="wall" d="M70 112 L330 112 L330 300 L70 300 Z" fill="#F2EEE6" stroke="#B9B2A5" stroke-width="1"/>
+                <rect x="60" y="196" width="280" height="10" fill="#3D4148"/>
+                <g fill="#BFD2E0" stroke="#5A5C5E" stroke-width="4">
+                  <rect id="window" x="100" y="135" width="60" height="44"/>
+                  <rect x="240" y="135" width="60" height="44"/>
+                  <rect x="100" y="225" width="60" height="44"/>
+                </g>
+                <rect id="door" x="236" y="222" width="52" height="78" fill="#8A5A3C"/>
+                <circle cx="278" cy="262" r="3" fill="#E8D9B0"/>
+                <!-- 帯から垂れるペンキ。色は CSS の --drip-color に連動する -->
+                <g class="color__house-drip">
+                  <path d="M182 204h8v14a4 4 0 0 1-8 0z"/>
+                  <path d="M206 204h8v26a4 4 0 0 1-8 0z"/>
+                  <path d="M318 204h8v10a4 4 0 0 1-8 0z"/>
+                </g>
+              </svg>
+            </div>
+            <div class="color__panel">
+              <ul class="color__chips" aria-label="外壁の色">
+                <!-- チップは color-sim.js の配列から生成する -->
+              </ul>
+              <div class="color__info" aria-live="polite">
+                <p class="color__name">ウォームホワイト</p>
+                <p class="color__desc">明るく清潔感。どんな屋根にも合う定番</p>
+              </div>
+              <div class="color__action">
+                <a class="button button--main color__button" href="contact.html">この色で相談する</a>
+                <p class="note">※画面の色は実際の塗料と見え方が異なります。現地で色見本板をお持ちします。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ⑧ 施工事例（垂れ演出なし） -->
+      <section class="works section section--sub" id="works">
+        <div class="container container--narrow">
+          <div class="section-head">
+            <p class="section-label">WORKS</p>
+            <h2 class="heading">施工事例</h2>
+          </div>
+          <ul class="works__list">
+            <li class="works__card">
+              <figure class="works__figure works__figure--before">
+                <img src="images/photo/works-s-before.jpg" alt="S様邸 塗装前。色あせた外壁" width="1408" height="768" loading="lazy">
+                <figcaption class="works__tag">Before</figcaption>
+              </figure>
+              <figure class="works__figure works__figure--after">
+                <img src="images/photo/works-s-after.jpg" alt="S様邸 塗装後。グレージュの外壁" width="1408" height="768" loading="lazy">
+                <figcaption class="works__tag works__tag--after">After</figcaption>
+              </figure>
+              <div class="works__body">
+                <h3 class="works__title">桜ヶ丘市 S様邸</h3>
+                <dl class="works__meta">
+                  <div><dt>工事</dt><dd>外壁塗装</dd></div>
+                  <div><dt>色</dt><dd>グレージュ</dd></div>
+                  <div><dt>工期</dt><dd>12日</dd></div>
+                </dl>
+              </div>
+            </li>
+            <li class="works__card">
+              <figure class="works__figure works__figure--before">
+                <img src="images/photo/works-k-before.jpg" alt="K様邸 塗装前。色あせた外壁" width="1408" height="768" loading="lazy">
+                <figcaption class="works__tag">Before</figcaption>
+              </figure>
+              <figure class="works__figure works__figure--after">
+                <img src="images/photo/works-k-after.jpg" alt="K様邸 塗装後。ネイビーの外壁" width="1408" height="768" loading="lazy">
+                <figcaption class="works__tag works__tag--after">After</figcaption>
+              </figure>
+              <div class="works__body">
+                <h3 class="works__title">桜ヶ丘市 K様邸</h3>
+                <dl class="works__meta">
+                  <div><dt>工事</dt><dd>外壁・屋根塗装</dd></div>
+                  <div><dt>色</dt><dd>ネイビー</dd></div>
+                  <div><dt>工期</dt><dd>16日</dd></div>
+                </dl>
+              </div>
+            </li>
+            <li class="works__card">
+              <figure class="works__figure works__figure--before">
+                <img src="images/photo/works-m-before.jpg" alt="M様邸 塗装前。くすんだ外壁" width="1408" height="768" loading="lazy">
+                <figcaption class="works__tag">Before</figcaption>
+              </figure>
+              <figure class="works__figure works__figure--after">
+                <img src="images/photo/works-m-after.jpg" alt="M様邸 塗装後。ウォームホワイトの外壁" width="1408" height="768" loading="lazy">
+                <figcaption class="works__tag works__tag--after">After</figcaption>
+              </figure>
+              <div class="works__body">
+                <h3 class="works__title">桜ヶ丘市 M様邸</h3>
+                <dl class="works__meta">
+                  <div><dt>工事</dt><dd>外壁塗装</dd></div>
+                  <div><dt>色</dt><dd>ウォームホワイト</dd></div>
+                  <div><dt>工期</dt><dd>10日</dd></div>
+                </dl>
+              </div>
+            </li>
+          </ul>
+          <!-- 仕上がりを見て「うちも」と思った場所にも置く -->
+          <div class="action-row">
+            <a class="button button--accent button--large" href="contact.html">無料お見積りはこちら</a>
+            <p class="tel">
+              <a class="tel__number" href="tel:0120121234"><span class="tel__digits">0120-12-1234</span></a>
+              <span class="tel__time">受付 8:00〜18:00／日曜定休</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ⑨ 料金とご依頼の流れ -->
+      <section class="price section" id="price">
+        <div class="container">
+          <div class="section-head">
+            <p class="section-label">PRICE &amp; FLOW</p>
+            <h2 class="heading">料金とご依頼の流れ</h2>
+          </div>
+
+          <div class="price__box">
+            <h3 class="price__title">料金の目安<span>（30坪の場合・税込）</span></h3>
+            <table class="price__table">
+              <tbody>
+                <tr><th scope="row">外壁塗装</th><td><span>85</span>万円〜</td></tr>
+                <tr><th scope="row">屋根塗装</th><td><span>45</span>万円〜</td></tr>
+                <tr><th scope="row">外壁＋屋根セット</th><td><span>120</span>万円〜</td></tr>
+              </tbody>
+            </table>
+            <p class="note price__note">現地調査・お見積りは無料です。建物の状態により金額は変わります。</p>
+          </div>
+
+          <h3 class="flow-title">ご依頼の流れ</h3>
+          <ol class="flow">
+            <li class="flow__item">
+              <img class="flow__icon" src="images/icon/flow-1.png" alt="" width="144" height="144" loading="lazy">
+              <p class="flow__step">STEP 1</p>
+              <h4 class="flow__title">お問い合わせ</h4>
+              <p class="flow__text">お電話かフォームから</p>
+            </li>
+            <li class="flow__item">
+              <img class="flow__icon" src="images/icon/flow-2.png" alt="" width="144" height="144" loading="lazy">
+              <p class="flow__step">STEP 2</p>
+              <h4 class="flow__title">現地調査</h4>
+              <p class="flow__text">職人が建物の状態を確認（約1時間・無料）</p>
+            </li>
+            <li class="flow__item">
+              <img class="flow__icon" src="images/icon/flow-3.png" alt="" width="144" height="144" loading="lazy">
+              <p class="flow__step">STEP 3</p>
+              <h4 class="flow__title">お見積り</h4>
+              <p class="flow__text">項目ごとに明細でご説明</p>
+            </li>
+            <li class="flow__item">
+              <img class="flow__icon" src="images/icon/flow-4.png" alt="" width="144" height="144" loading="lazy">
+              <p class="flow__step">STEP 4</p>
+              <h4 class="flow__title">施工</h4>
+              <p class="flow__text"><span class="phrase">ご近所への</span><span class="phrase">ごあいさつも</span><span class="phrase">私たちが</span></p>
+            </li>
+            <li class="flow__item">
+              <img class="flow__icon" src="images/icon/flow-5.png" alt="" width="144" height="144" loading="lazy">
+              <p class="flow__step">STEP 5</p>
+              <h4 class="flow__title">完了・点検</h4>
+              <p class="flow__text"><span class="phrase">1年・3年・5年の</span><span class="phrase">無料点検</span></p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ⑩ CTA -->
+      <section class="cta" id="contact">
+        <div class="container cta__inner">
+          <h2 class="cta__title"><span class="phrase">まずは、</span><span class="phrase">お気軽に</span><span class="phrase">ご相談ください。</span></h2>
+          <p class="cta__text"><span class="phrase">見積りだけでも大丈夫です。</span><span class="phrase">無理な営業はいたしません。</span></p>
+          <div class="cta__actions">
+            <p class="tel tel--light">
+              <a class="tel__number" href="tel:0120121234"><span class="tel__digits">0120-12-1234</span></a>
+              <span class="tel__time">受付 8:00〜18:00／日曜定休</span>
+            </p>
+            <a class="button button--accent button--large button--drip" href="contact.html">無料お見積りはこちら</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ⑪ フッター -->
+      <footer class="footer">
+        <div class="footer__inner">
+          <p class="footer__logo"><img src="images/logo.png" alt="まちのペンキ屋 いろは塗装" width="560" height="150" loading="lazy"></p>
+          <address class="footer__address">
+            〒000-0000 桜ヶ丘市いろは町1-6-4<br>
+            対応エリア：桜ヶ丘市・周辺地域
+          </address>
+        </div>
+        <p class="footer__note">※ポートフォリオ用に制作した架空の店舗のサイトです。店名・実績・料金・電話番号・住所はすべて架空で、写真はAI生成です。</p>
+      </footer>
+
+    </div>
+  </main>
+
+  <script src="js/drip.js"></script>
+  <script src="js/color-sim.js"></script>
+  <script src="js/fade-in.js"></script>
+</body>
+</html>

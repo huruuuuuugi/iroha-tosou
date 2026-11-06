@@ -1,0 +1,1686 @@
+/* =========================================================
+   いろは塗装 トップページ
+   1. 変数  2. ベース  3. 共通パーツ  4. セクション（HTMLの順）
+   スマホを基本に書き、PCは @media (min-width: 768px) で上書きする
+   ========================================================= */
+
+/* ---------- 1. 変数 ---------- */
+:root {
+  /* 背景 */
+  --color-bg: #F6F4EF;         /* 漆喰：ページ全体 */
+  --color-bg-sub: #EFE8DC;     /* 砂壁：セクションの交互背景 */
+  --color-band: #E5F0FF;       /* 藍白：実績の帯、流れのカード */
+
+  /* テキスト */
+  --color-text: #2B2A28;       /* 墨：本文・見出し */
+  --color-text-sub: #6B675F;   /* 鼠：注記。4.5:1以上を確保するためFigmaの#919191より濃くしている */
+
+  /* メイン・アクセント */
+  --color-main: #2F4A6B;       /* 藍 */
+  --color-accent: #BF5219;     /* 朱：ボタン */
+  --color-accent-dark: #A44614;
+  --color-paint: #E07B39;      /* ペンキ朱：垂れ・装飾のみ。文字には使わない */
+
+  /* 垂れの色。色見本のJSがここを書き換える */
+  --drip-color: var(--color-paint);
+
+  /* フォント */
+  --font-heading: "Zen Kaku Gothic Antique", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-body: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-en: "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+
+  /* 余白（Figmaの変数と同じ値） */
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+
+  /* レイアウト */
+  --content-width: 1080px;     /* 広いカラム */
+  --content-narrow: 720px;     /* 狭いカラム */
+  --gutter: 24px;
+  --section-space: 48px;
+  --radius: 8px;
+  --shadow-cta: 0 4px 4px rgba(113, 52, 20, 0.3);
+
+  /* ペンキ演出（--paint-y と --rest-opacity は js/drip.js が書き換える） */
+  --header-height: 72px;
+  --wave-height: 72px;
+  --paint-y: 0px;
+  --rest-opacity: 1;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --section-space: var(--space-2xl);
+    --gutter: 48px;
+    --header-height: 104px;
+    --wave-height: 120px;
+  }
+}
+
+/* ---------- 2. ベース ---------- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.75;
+  letter-spacing: 0.04em;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-main);
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* 言葉のまとまり：入りきらないときは、まとまりごと次の行へ送る。
+   <br> と違って画面幅ごとに指定し直さなくてよく、1行に入る幅なら普通に1行で並ぶ */
+.phrase {
+  display: inline-block;
+}
+
+/* 改行を画面幅で出し分ける */
+.pc-only { display: none; }
+@media (min-width: 768px) {
+  .pc-only { display: inline; }
+  .sp-only { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ---------- 3. 共通パーツ ---------- */
+.container {
+  max-width: calc(var(--content-width) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.container--narrow {
+  max-width: calc(var(--content-narrow) + var(--gutter) * 2);
+}
+
+.section {
+  padding-block: var(--section-space);
+  scroll-margin-top: var(--space-m);
+}
+
+.section--sub {
+  background: var(--color-bg-sub);
+}
+
+/* 見出しまわり */
+.section-head {
+  margin-bottom: var(--space-l);
+  text-align: center;
+}
+
+.section-label {
+  font-family: var(--font-en);
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  color: var(--color-main);
+}
+
+.heading {
+  margin-top: var(--space-s);
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  text-wrap: balance;
+}
+
+.section-head__lead {
+  margin-top: var(--space-l);
+}
+
+@media (min-width: 768px) {
+  .section-head {
+    margin-bottom: var(--space-xl);
+  }
+
+  .heading {
+    font-size: 24px;
+  }
+}
+
+/* ボタン：高さ44px以上を確保 */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--space-s) var(--space-l);
+  border-radius: 999px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.button--accent {
+  background: var(--color-accent);
+  color: #fff;
+  box-shadow: var(--shadow-cta);
+}
+
+.button--accent:hover {
+  background: var(--color-accent-dark);
+}
+
+.button--main {
+  background: var(--color-main);
+  color: #fff;
+}
+
+.button--main:hover {
+  background: #233A55;
+}
+
+.button--large {
+  min-height: 52px;
+  padding-inline: var(--space-xl);
+}
+
+/* CTAボタン：hoverで下に少し垂れる（CSSのみ） */
+.button--drip {
+  position: relative;
+}
+
+.button--drip::after {
+  content: "";
+  position: absolute;
+  top: calc(100% - 6px);
+  left: 30%;
+  width: 10px;
+  height: 0;
+  border-radius: 0 0 5px 5px;
+  background: inherit;
+  transition: height 0.5s ease-in;
+}
+
+.button--drip:hover::after {
+  height: 22px;
+}
+
+/* 電話番号 */
+.tel {
+  line-height: 1.4;
+}
+
+/* 電話をかける人が多い想定なので、太字にして、押せる範囲を上下に広げて44px以上にする */
+.tel__number {
+  display: inline-block;
+  padding-block: 6px;
+  font-family: var(--font-en);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-main);
+  text-decoration: none; /* リンク全体には線を引かない。「TEL」に線が付かないようにするため */
+}
+
+/* 「押せる」ことを示す下線は、番号の部分にだけ引く */
+.tel__digits {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.tel__number::before {
+  content: "TEL";
+  margin-right: var(--space-s);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+
+.tel__time {
+  display: block;
+  font-size: 14px;
+  color: var(--color-text-sub);
+}
+
+.tel--light .tel__number,
+.tel--light .tel__time {
+  color: #fff;
+}
+
+/* ページの途中に置く、お見積りボタンと電話番号のまとまり */
+.action-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-m);
+  margin-top: var(--space-l);
+  text-align: center;
+}
+
+.action-row .button {
+  width: 100%; /* スマホでは親指で押しやすいように横幅いっぱいにする */
+}
+
+@media (min-width: 768px) {
+  .action-row {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--space-l);
+    margin-top: var(--space-xl);
+    text-align: left;
+  }
+
+  .action-row .button {
+    width: auto;
+  }
+}
+
+/* 注記：12pxの行間1.0では2行のときに詰まるので、14px・1.6にしている */
+.note {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-sub);
+}
+
+/* カード（お悩み） */
+.card {
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.card__image {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+}
+
+.card__body {
+  padding: var(--space-m);
+}
+
+.card__title {
+  margin-bottom: var(--space-s);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.card__body p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ---------- 4-1. ヘッダー ---------- */
+/* ヒーローの上に重ねる。追従はせず、ページと一緒に上へ流れる */
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  width: 100%;
+  height: var(--header-height);
+  padding-inline: var(--gutter);
+}
+
+.header__logo {
+  margin-right: auto;
+}
+
+.header__logo img {
+  width: 168px;
+}
+
+/* スマホではナビを隠し、ボタンだけ見せる */
+.header__nav {
+  display: none;
+}
+
+.header__button {
+  padding-inline: var(--space-m);
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+  .header {
+    gap: var(--space-l);
+    padding-inline: var(--space-2xl);
+  }
+
+  .header__logo img {
+    width: 240px;
+  }
+
+  .header__button {
+    padding-inline: var(--space-l);
+    font-size: 16px;
+    white-space: nowrap;
+  }
+}
+
+/* ナビは全部が1行に収まる幅から出す。768pxから出すと、語の途中で折り返してしまう */
+@media (min-width: 900px) {
+  .header__nav {
+    display: block;
+  }
+
+  .header__nav-list {
+    display: flex;
+    gap: var(--space-l);
+  }
+
+  .header__nav-list a {
+    display: inline-block;
+    padding-block: var(--space-s);
+    font-weight: 700;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .header__nav-list a {
+    white-space: nowrap;
+  }
+
+  .header__nav-list a:hover {
+    color: var(--color-main);
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+}
+
+/* ---------- 4-2. ヒーロー ---------- */
+/* SPは写真が上・テキストが下。HTMLはテキストが先なので order で入れ替える */
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  padding-top: var(--header-height);
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.hero__media {
+  position: relative;
+  flex: 1;
+  order: -1;
+  min-height: 180px;
+  /* 下端を背景に溶かす */
+  -webkit-mask-image: linear-gradient(to bottom, #000 85%, transparent);
+  mask-image: linear-gradient(to bottom, #000 85%, transparent);
+}
+
+.hero__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+}
+
+/* ペンキの面：ヒーローと同じ高さの箱を、下端がヘッダーの下に来るように上へ隠しておく。
+   JSが --paint-y を増やすと、箱ごと下へ動いてヒーローを塗りつぶす */
+.hero__paint {
+  position: absolute;
+  bottom: calc(100% - var(--header-height));
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg);
+  transform: translateY(var(--paint-y));
+  will-change: transform;
+}
+
+/* 箱の下端にくっついている波。描く範囲の上3分の1は、波が上に揺れたとき用の余白 */
+.hero__wave {
+  position: absolute;
+  top: calc(100% - var(--wave-height) / 3 - 1px);
+  left: 0;
+  width: 100%;
+  height: var(--wave-height);
+  fill: var(--color-bg);
+}
+
+.hero__content {
+  position: relative;
+  padding: var(--space-m) var(--gutter) var(--space-l);
+}
+
+.hero__title {
+  font-family: var(--font-heading);
+  font-size: clamp(36px, 11vw, 48px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.05em;
+}
+
+.hero__title-accent {
+  color: var(--color-accent);
+}
+
+.hero__lead {
+  margin-top: var(--space-s);
+  font-size: 15px;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-s) var(--space-l);
+  margin-top: var(--space-m);
+}
+
+@media (min-width: 768px) {
+  .hero {
+    display: block;
+    /* 中身の高さは .hero__content で確保する */
+    padding-top: 0;
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: var(--header-height) 0 0 auto;
+    width: 56%;
+    /* 左側を背景に溶かして、文字の読みやすさを確保する */
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 34%);
+    mask-image: linear-gradient(to right, transparent, #000 34%);
+  }
+
+  .hero__media img {
+    object-position: right 32%;
+  }
+
+  .hero__content {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+    padding: calc(var(--header-height) + var(--space-xl)) var(--space-2xl) var(--space-2xl);
+  }
+
+  .hero__title {
+    /* 画面の幅と高さの両方に合わせて、1画面に収める */
+    font-size: min(6.7vw, 12vh, 96px);
+  }
+
+  .hero__lead {
+    margin-top: var(--space-l);
+    font-size: 16px;
+  }
+
+  .hero__actions {
+    margin-top: auto;
+    padding-top: var(--space-l);
+    gap: var(--space-m);
+  }
+}
+
+/* タブレットでは横に並べると電話番号が写真に重なるので、縦に積む */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero__actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ---------- 4-3. 本編の浮かび上がり ----------
+   JSが動いて .is-paint-ready が付いたときだけ有効になる。
+   JSなし・動きを減らす設定では、最初から全部が見える */
+.is-paint-ready .page-rest {
+  opacity: var(--rest-opacity);
+}
+
+/* フェードイン（js/fade-in.js がクラスを付ける）
+   下から16px上がりながら現れる。transform は見た目だけを動かすので、ページの高さは変わらない */
+.fade-in {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+/* transition は現れる側にだけ書く。隠すときは一瞬で、現れるときだけゆっくり動く */
+.fade-in.is-visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* ---------- 4-4. 代表メッセージ ---------- */
+.message__inner {
+  display: grid;
+  gap: var(--space-l);
+}
+
+.message__image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.message__body {
+  margin-top: var(--space-m);
+}
+
+.message__body p {
+  text-wrap: pretty; /* 最後の行に1〜2文字だけ残らないようにする */
+}
+
+.message__body p + p {
+  margin-top: var(--space-m);
+}
+
+.message__sign {
+  margin-top: var(--space-l);
+  font-weight: 700;
+  text-align: right;
+}
+
+.message__sign span {
+  margin-left: var(--space-m);
+  font-family: var(--font-heading);
+  font-size: 18px;
+}
+
+@media (min-width: 768px) {
+  .message__inner {
+    grid-template-columns: minmax(280px, 396px) 1fr;
+    gap: var(--space-xl);
+  }
+
+  .message__image {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .message__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .message__body {
+    max-width: 640px;
+    margin-top: var(--space-l);
+  }
+}
+
+/* ---------- 4-5. 実績の数字 ---------- */
+.numbers {
+  padding-block: var(--space-xl);
+  background: var(--color-band);
+}
+
+.numbers__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-m);
+  max-width: var(--content-narrow);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.numbers__item dt {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.numbers__item dd {
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--color-main);
+}
+
+.numbers__value {
+  margin-right: 2px;
+  font-family: var(--font-en);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.numbers__note {
+  margin-top: var(--space-m);
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .numbers__list {
+    /* 中身に合わせず等幅にして、項目の間隔をそろえる */
+    max-width: 480px;
+  }
+
+  .numbers__value {
+    font-size: 40px;
+  }
+}
+
+/* ---------- 4-6. お悩み ---------- */
+.trouble__list {
+  display: grid;
+  gap: var(--space-m);
+}
+
+.trouble__closing {
+  margin-top: var(--space-l);
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.trouble__closing strong {
+  /* ペンキでなぞったような下線 */
+  background: linear-gradient(transparent 65%, rgba(224, 123, 57, 0.4) 65%);
+}
+
+@media (min-width: 768px) {
+  .trouble__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  .trouble__closing {
+    margin-top: var(--space-xl);
+  }
+}
+
+/* ---------- 4-7. 選ばれる3つの理由 ---------- */
+.reason__list {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.reason__image {
+  width: 100%;
+  aspect-ratio: 10 / 7;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.reason__text {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  margin-top: var(--space-m);
+}
+
+.reason__num {
+  flex-shrink: 0;
+  font-family: var(--font-en);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--color-main);
+}
+
+.reason__title {
+  margin-bottom: var(--space-s);
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-wrap: balance;
+}
+
+@media (min-width: 768px) {
+  .reason__item {
+    display: grid;
+    grid-template-columns: minmax(280px, 400px) 1fr;
+    align-items: center;
+    gap: var(--space-xl);
+  }
+
+  /* 2つ目だけ写真とテキストを左右反転する */
+  .reason__item:nth-child(even) {
+    grid-template-columns: 1fr minmax(280px, 400px);
+  }
+
+  .reason__item:nth-child(even) .reason__image {
+    order: 1;
+  }
+
+  .reason__text {
+    margin-top: 0;
+  }
+
+  .reason__num {
+    font-size: 40px;
+  }
+
+  .reason__title {
+    font-size: 20px;
+  }
+}
+
+/* ---------- 4-8. 色見本 ---------- */
+.color__body {
+  display: grid;
+  gap: var(--space-l);
+}
+
+.color__house {
+  display: flex;
+  align-items: center;
+  padding: var(--space-m);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.color__house svg {
+  width: 100%;
+}
+
+#wall {
+  transition: fill 0.4s;
+}
+
+.color__house-drip {
+  fill: var(--drip-color);
+  /* 白っぽい色を選んでも垂れの輪郭が見えるように */
+  stroke: rgba(0, 0, 0, 0.25);
+  stroke-width: 1;
+  transition: fill 0.4s;
+}
+
+.color__panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.color__chips {
+  display: grid;
+  grid-template-columns: repeat(4, 50px);
+  justify-content: center; /* 間隔は24pxのまま、列全体を中央に置く。PCの列幅272pxにもちょうど収まる */
+  gap: var(--space-l);
+}
+
+.color__chip {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 50%;
+  background: var(--chip-color);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.color__chip:hover {
+  transform: scale(1.06);
+}
+
+/* 選択中のチップは、藍の二重線で囲む */
+.color__chip[aria-pressed="true"] {
+  box-shadow: 0 0 0 3px var(--color-bg), 0 0 0 5px var(--color-main);
+}
+
+.color__info {
+  margin-top: var(--space-m);
+  padding: var(--space-m);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.color__name {
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.color__desc {
+  font-size: 14px;
+  line-height: 1.6;
+  /* balance は行の長さをそろえるので、1行目の右が空いてしまう。
+     pretty は1行目を使い切ったうえで、最後の行が短くなりすぎないように調整する */
+  text-wrap: pretty;
+}
+
+.color__action {
+  padding-top: var(--space-l);
+}
+
+.color__button {
+  width: 100%;
+  margin-bottom: var(--space-s);
+}
+
+@media (min-width: 768px) {
+  .color__body {
+    /* 右列の304px：一番長い説明文（約262px）がカードの内側に1行で収まる幅 */
+    grid-template-columns: minmax(0, 1fr) 304px;
+    gap: var(--space-xl);
+  }
+
+  /* 操作列の高さを絵に合わせ、ボタンと注記を下端にそろえる */
+  .color__action {
+    margin-top: auto;
+  }
+}
+
+/* ---------- 4-9. 施工事例 ---------- */
+.works__list {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.works__card {
+  display: grid;
+  grid-template-columns: 35fr 65fr;
+  align-items: end;
+  gap: var(--space-m) var(--space-s);
+}
+
+.works__figure {
+  position: relative;
+}
+
+.works__figure img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.works__tag {
+  position: absolute;
+  top: var(--space-s);
+  left: var(--space-s);
+  padding: 0 var(--space-s);
+  border-radius: 4px;
+  background: var(--color-text-sub);
+  color: #fff;
+  font-family: var(--font-en);
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+}
+
+.works__tag--after {
+  background: var(--color-accent);
+}
+
+.works__body {
+  grid-column: 1 / -1;
+}
+
+.works__title {
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.works__meta {
+  margin-top: var(--space-s);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.works__meta div {
+  display: flex;
+  gap: var(--space-s);
+}
+
+.works__meta dt {
+  color: var(--color-text-sub);
+}
+
+@media (min-width: 768px) {
+  .works__list {
+    gap: var(--space-l);
+  }
+
+  .works__card {
+    /* 720 = Before 170 + After 370 + 文字 164 + 間隔 8×2 */
+    grid-template-columns: 170px minmax(0, 1fr) 164px;
+    align-items: center;
+    gap: var(--space-s);
+  }
+
+  .works__figure--before {
+    align-self: end;
+  }
+
+  .works__body {
+    grid-column: auto;
+    padding-left: var(--space-s);
+  }
+}
+
+/* ---------- 4-10. 料金とご依頼の流れ ---------- */
+.price__box {
+  max-width: var(--content-narrow);
+  margin-inline: auto;
+  padding: var(--space-l);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.price__title {
+  margin-bottom: var(--space-m);
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.price__title span {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.price__table {
+  width: 100%;
+}
+
+.price__table tr {
+  border-bottom: 1px solid #ECE7DD;
+}
+
+.price__table th,
+.price__table td {
+  padding-block: var(--space-m);
+  vertical-align: middle;
+}
+
+.price__table th {
+  font-weight: 700;
+  text-align: left;
+}
+
+.price__table td {
+  font-size: 14px;
+  text-align: right;
+  color: var(--color-main);
+  white-space: nowrap;
+}
+
+.price__table td span {
+  margin-right: 2px;
+  font-family: var(--font-en);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.price__note {
+  margin-top: var(--space-m);
+  text-align: center;
+}
+
+.flow-title {
+  margin: var(--space-xl) 0 var(--space-l);
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.flow {
+  display: grid;
+  max-width: var(--content-narrow); /* 縦並びのタブレットで、カードが横に伸びすぎないように */
+  margin-inline: auto;
+  gap: 32px; /* 矢印10px + 上下の余白11px */
+}
+
+.flow__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  column-gap: var(--space-m);
+  padding: var(--space-m);
+  border-radius: var(--radius);
+  background: var(--color-band);
+}
+
+.flow__icon {
+  grid-row: span 3;
+  align-self: center;
+  width: 56px;
+  height: 56px;
+}
+
+.flow__step {
+  font-family: var(--font-en);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  color: var(--color-main);
+}
+
+.flow__title {
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.flow__text {
+  font-size: 14px;
+  line-height: 1.6;
+  text-wrap: balance; /* 1文字だけ次の行に残らないよう、行の長さをそろえる */
+}
+
+/* ステップの間の矢印。スマホはカードが縦に並ぶので、下向きにする。
+   幅も高さも0の箱の「枠線」は三角形になるので、上の枠線だけに色を付けると下向きの三角になる */
+.flow__item + .flow__item::before {
+  content: "";
+  position: absolute;
+  top: -21px;
+  left: 50%;
+  border-inline: 7px solid transparent;
+  border-top: 10px solid var(--color-main);
+  transform: translateX(-50%);
+}
+
+@media (min-width: 768px) {
+  .flow-title {
+    margin-top: var(--space-2xl);
+  }
+}
+
+/* 5枚を横に並べるのは、広いカラム（1080px + 左右の余白96px）が収まる画面だけ。
+   それより狭いと文章が細切れになるので、スマホと同じ縦並びのままにする */
+@media (min-width: 1176px) {
+  .flow {
+    max-width: none;
+    /* カードの間の36px = 矢印10px + 左右の余白13px */
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 36px;
+  }
+
+  .flow__item {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-content: start;
+    padding: var(--space-m) 12px;
+    text-align: center;
+  }
+
+  .flow__icon {
+    grid-row: auto;
+    width: 64px;
+    height: 64px;
+    margin-bottom: var(--space-s);
+  }
+
+  .flow__title {
+    margin-bottom: var(--space-xs);
+  }
+
+  /* PCはカードが横に並ぶので、右向きにする。カードの間のちょうど中央に置く */
+  .flow__item + .flow__item::before {
+    top: 50%;
+    left: -23px;
+    border: 0; /* スマホ用の枠線をいったん消してから、指定し直す */
+    border-block: 7px solid transparent;
+    border-left: 10px solid var(--color-main);
+    transform: translateY(-50%);
+  }
+}
+
+/* ---------- 4-11. CTA ---------- */
+.cta {
+  padding-block: var(--section-space);
+  background: var(--color-main);
+  color: #fff;
+  text-align: center;
+  scroll-margin-top: var(--space-m);
+}
+
+.cta__title {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+}
+
+.cta__text {
+  margin-top: var(--space-s);
+}
+
+.cta__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-l);
+  margin-top: var(--space-l);
+}
+
+.cta .tel__number {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.cta .button:focus-visible,
+.cta a:focus-visible {
+  outline-color: #fff;
+}
+
+@media (min-width: 768px) {
+  .cta__actions {
+    flex-direction: row;
+    justify-content: center;
+    margin-top: var(--space-xl);
+  }
+
+  .cta .tel {
+    text-align: left;
+  }
+
+  .cta .button {
+    min-width: 309px;
+  }
+}
+
+/* ---------- 4-12. フッター ---------- */
+.footer {
+  padding-block: var(--space-l);
+  background: var(--color-text);
+  color: #E8E4DC;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-m);
+  padding-inline: var(--gutter);
+}
+
+.footer__logo {
+  padding: var(--space-xs) var(--space-s);
+  border-radius: 4px;
+  background: #fff;
+}
+
+.footer__logo img {
+  width: 232px;
+}
+
+.footer__address {
+  font-style: normal;
+}
+
+.footer__note {
+  margin-top: var(--space-m);
+  padding-inline: var(--gutter);
+  font-size: 12px;
+  text-align: center;
+  text-wrap: pretty;
+}
+
+@media (min-width: 768px) {
+  .footer__inner {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+/* ---------- 5. お見積りフォーム（contact.html） ---------- */
+/* ヘッダーがページの上に重なっている（absolute）ので、その分だけ下げる */
+.contact {
+  padding-top: var(--header-height);
+  padding-bottom: var(--section-space);
+}
+
+.contact__title {
+  margin-top: var(--space-l);
+  text-align: center;
+}
+
+.contact__tel {
+  margin-top: var(--space-l);
+  padding: var(--space-m);
+  border-radius: var(--radius);
+  background: var(--color-band);
+  text-align: center;
+}
+
+.form-noscript {
+  margin-top: var(--space-l);
+  font-weight: 700;
+}
+
+/* 進み具合：4列に等分し、丸の中心どうしを線でつなぐ */
+.form-progress {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: var(--space-xl);
+}
+
+.form-progress[hidden] {
+  display: none; /* display: grid が hidden を打ち消さないようにする */
+}
+
+.form-progress__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-sub);
+}
+
+/* 丸をつなぐ線。自分の丸の中心から、1つ前の丸の中心まで伸ばしている */
+.form-progress__item + .form-progress__item::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  right: 50%;
+  width: 100%;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.form-progress__num {
+  position: relative; /* 線より手前に出す */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--color-text-sub);
+  border-radius: 50%;
+  background: var(--color-bg);
+  font-family: var(--font-en);
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* 今の段階：色だけでなく、太字でも伝える */
+.form-progress__item[aria-current="step"] {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* 今の段階と終わった段階は、藍で塗る */
+.form-progress__item[aria-current="step"] .form-progress__num,
+.form-progress__item.is-done .form-progress__num {
+  border-color: var(--color-main);
+  background: var(--color-main);
+  color: #fff;
+}
+
+/* 終わった段階：数字を隠して✓に置き換える。そこまでの線も藍にする */
+.form-progress__item.is-done {
+  color: var(--color-text);
+}
+
+.form-progress__item.is-done .form-progress__num {
+  font-size: 0;
+}
+
+.form-progress__item.is-done .form-progress__num::after {
+  content: "✓";
+  font-size: 16px;
+}
+
+.form-progress__item.is-done::before,
+.form-progress__item[aria-current="step"]::before {
+  background: var(--color-main);
+}
+
+.form {
+  margin-top: var(--space-xl);
+}
+
+/* 見出しへフォーカスを移すのはJSの都合なので、枠は出さない */
+.form-step [tabindex="-1"]:focus {
+  outline: none;
+}
+
+.form-step-head {
+  margin-bottom: var(--space-l);
+}
+
+.form-step-title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+}
+
+.form-step-lead {
+  margin-top: var(--space-xs);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* 項目のまとまり */
+.form-group {
+  min-width: 0; /* fieldset は標準だと中身より縮まないので、はみ出しを防ぐ */
+  margin: 0 0 var(--space-l);
+  padding: 0;
+  border: 0;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--space-s);
+  padding: 0;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* Figmaの赤は小さい文字だとコントラストが足りないので、少し濃くしている（約5.5:1） */
+.form-required,
+.form-error {
+  color: #BE1E1E;
+}
+
+.form-required {
+  margin-left: var(--space-xs);
+  font-size: 12px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+/* ラジオボタン・チェックボックス：文字まで含めて押せるように label で包む */
+.form-choices {
+  display: grid;
+}
+
+.form-choice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: 44px; /* スマホの指で押しやすい高さ */
+  cursor: pointer;
+}
+
+.form-choice input {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--color-main);
+  cursor: pointer;
+}
+
+/* 入力欄。文字は16px（これより小さいとiPhoneで入力時に画面が拡大されてしまう） */
+.form-input {
+  display: block;
+  width: 100%;
+  min-height: 46px;
+  padding: var(--space-s);
+  border: 1px solid var(--color-text);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--color-text);
+  font: inherit;
+  line-height: 1.5;
+}
+
+.form-input::placeholder {
+  color: var(--color-text-sub);
+}
+
+.form-textarea {
+  resize: vertical;
+}
+
+.form-input:focus-visible,
+.form-choice input:focus-visible,
+.form-color input:focus-visible + span {
+  outline: 3px solid var(--color-main);
+  outline-offset: 2px;
+}
+
+.form-inputs {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.form-input-wrap {
+  display: block;
+  flex: 1;
+  min-width: 0;
+}
+
+.form-other {
+  margin-top: var(--space-xs);
+}
+
+/* 入力欄の下の案内 */
+.form-hint {
+  margin-top: var(--space-xs);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-sub);
+}
+
+/* エラー */
+.form-error {
+  margin-top: var(--space-s);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.is-error .form-input {
+  border: 2px solid #BE1E1E;
+}
+
+/* 色のチップ：本物のラジオボタンを透明にして、丸の上に重ねている。
+   見た目だけ丸にしても、キーボード操作や読み上げはラジオボタンのまま使える */
+.form-colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+}
+
+.form-color {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  background: var(--chip-color);
+  cursor: pointer;
+}
+
+.form-color input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* :has() で「中のラジオが選ばれている丸」を選ぶ。トップの色見本と同じ二重線 */
+.form-color:has(input:checked) {
+  box-shadow: 0 0 0 3px var(--color-bg), 0 0 0 5px var(--color-main);
+}
+
+.form-color:has(input:focus-visible) {
+  outline: 3px solid var(--color-main);
+  outline-offset: 6px;
+}
+
+.form-color-name {
+  margin-top: var(--space-s);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.form-consent {
+  margin-top: var(--space-xl);
+  text-align: center;
+}
+
+.form-consent .form-choice {
+  justify-content: center;
+}
+
+/* ボタン */
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-m);
+  margin-top: var(--space-xl);
+}
+
+.button--outline {
+  border: 1px solid var(--color-text);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.button--outline:hover {
+  background: var(--color-bg-sub);
+}
+
+.form-actions button {
+  border-width: 1px;
+  cursor: pointer;
+}
+
+.form-actions .button--main,
+.form-actions .button--accent {
+  border: 0;
+}
+
+.button--raised {
+  box-shadow: var(--shadow-cta);
+}
+
+/* 確認画面 */
+.form-summary {
+  padding-inline: var(--space-m);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.form-summary div {
+  padding-block: var(--space-m);
+  border-bottom: 1px solid #ECE7DD;
+}
+
+.form-summary div:last-child {
+  border-bottom: 0;
+}
+
+.form-summary dt {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.form-summary dd {
+  overflow-wrap: anywhere; /* 長いメールアドレスがはみ出さないように */
+  white-space: pre-wrap;   /* 相談欄の改行をそのまま見せる */
+}
+
+.form-summary dd.is-empty {
+  color: var(--color-text-sub);
+}
+
+.form-demo-note {
+  margin-top: var(--space-m);
+}
+
+/* 完了画面 */
+.form-done {
+  text-align: center;
+  text-wrap: balance; /* 行末に1〜2文字だけ残らないよう、行の長さをそろえる */
+}
+
+.form-done__text {
+  margin-block: var(--space-m) var(--space-s);
+}
+
+@media (min-width: 768px) {
+  .contact__title {
+    margin-top: var(--space-xl);
+  }
+
+  /* PCでは項目名を左、入力欄を右に並べ、入力欄の左端をそろえる */
+  .form-row {
+    display: grid;
+    grid-template-columns: 176px minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--space-m);
+  }
+
+  /* legend は標準だと枠の上に固定されて grid に並ばないので、float で流れに戻す */
+  .form-row legend {
+    float: left;
+  }
+
+  .form-row .form-label {
+    margin-bottom: 0;
+  }
+
+  .form-row .form-hint,
+  .form-row .form-error {
+    grid-column: 2;
+  }
+
+  .form-input--medium {
+    max-width: 280px;
+  }
+
+  /* マウス操作なので、Figmaどおり行の間隔を詰める */
+  .form-choice {
+    min-height: 32px;
+  }
+
+  .form-summary {
+    padding-inline: var(--space-l);
+  }
+
+  .form-summary div {
+    display: grid;
+    grid-template-columns: 176px minmax(0, 1fr);
+    gap: var(--space-m);
+  }
+
+  .form-summary dt {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+}
